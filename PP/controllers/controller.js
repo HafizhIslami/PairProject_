@@ -13,12 +13,12 @@ class Controller{
   }
 
   static login(req, res){
-    const { username, password } = req.body
+    const { email, password } = req.body
     User.findOne({
       where: {
-        username
+        email
       },
-      attributes: ['id', 'username', 'password']
+      attributes: ['id', 'email', 'password']
     })
     .then(result => {
       if (result) {
@@ -29,7 +29,7 @@ class Controller{
           return;
         }
       }
-      res.redirect('/login?error=Wrong username or password');
+      res.redirect('/login?error=Wrong email or password');
     })
     .catch(err => {
       console.log(err)
@@ -43,8 +43,8 @@ class Controller{
   }
 
   static createAccount(req,res){
-    const {username, password, role} = req.body
-    User.newUser(username, password, role)
+    const {email, password, role} = req.body
+    User.newUser(email, password, role)
     .then(result => {
       const { id } = result
       return Profile.create({
@@ -69,7 +69,7 @@ class Controller{
     let userData;
     User.findByPk(UserId,{
       include: [Profile],
-      attributes: ['username']
+      attributes: ['email']
     })
     .then(resultUser => {
       userData = resultUser.dataValues
@@ -126,7 +126,7 @@ class Controller{
       include: [
         {
           model: User,
-          attributes: ['username']
+          attributes: ['email']
         }
       ],
       where: {

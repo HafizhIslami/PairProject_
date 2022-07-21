@@ -116,16 +116,16 @@ main {
   width: 80px;
 }
 
-.show-username {
+.show-email {
   flex: 2;
   margin: 10px 20px;
 }
 
-.show-username a {
+.show-email a {
   margin-right: 10px;
 }
 
-.show-username .username {
+.show-email .email {
   font-size: 25px;
 }
 

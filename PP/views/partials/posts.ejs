@@ -1,7 +1,8 @@
+<% if (result.length !== 0){ %> 
 <% result.forEach(el => { %>
   <div class="container">
     <div class="name">
-      <a><%= el.User.username %></a>
+      <a><%= el.User.email %></a>
     </div>
     <div class="img">
       <img src="<%= el.imgUrl %>" alt="">
@@ -12,3 +13,4 @@
     </div>
   </div>
 <% }); %> 
+<% } %>

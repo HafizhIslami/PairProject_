@@ -14,21 +14,22 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasOne(models.Profile)
     }
-    static newUser(username, password, role){
+    static newUser(email, password, role){
       return User.create({
-        username, 
+        email, 
         password, 
         role
       })
     }
   }
   User.init({
-    username: {
+    email: {
       allowNull: false,
       type: DataTypes.STRING,
       validate: {
-        notEmpty: {msg: 'Please insert your username'},
-        notNull: {msg: 'Please insert your username'},
+        notEmpty: {msg: 'Please insert your email'},
+        notNull: {msg: 'Please insert your email'},
+        contains: {args: [['@']], msg: 'Please enter your real email'}
       }
     },
     password: {

@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     longName() {
-      return this.firstName + " " + this.lastName
+      let first = this.firstName
+      let last = this.lastName
+      first !== null ?  first : ''
+      last !== null ?  last : ''
+      return first + " " + last
     }
   }
   Profile.init({
