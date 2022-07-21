@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Profile.belongsTo(models.User)
     }
+
+    longName() {
+      return this.firstName + " " + this.lastName
+    }
   }
   Profile.init({
     firstName: DataTypes.STRING,
