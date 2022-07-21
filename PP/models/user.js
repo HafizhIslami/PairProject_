@@ -12,12 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Profile, {
-        foreignKey: 'UserId'
-      })
-      User.hasMany(models.Post, {
-        foreignKey: 'UserId'
-      })
+      User.hasOne(models.Profile)
     }
     static newUser(username, password, role){
       return User.create({
@@ -45,7 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     role: DataTypes.STRING,
-    ProfileId: DataTypes.INTEGER
   }, {
     hooks: {
       beforeCreate: (instance, options) => {
