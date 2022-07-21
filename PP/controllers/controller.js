@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 class Controller{
   static home(req, res){
-    Controller.loginForm()
+    res.redirect('/user/login')
   }
   static loginForm(req, res){
     res.render('login')
@@ -22,20 +22,80 @@ class Controller{
       // ---------------
     })
   }
+  static createAccountForm(req,res){
+    res.render('register')
+  }
   static createAccount(req,res){
     const {username, password, role} = req.body
     let encrypt = bcrypt.genSaltSync(10)
-    User.create({username, password: encrypt, role})
+    Profile.create({})
     .then(result => {
-      res.redirect('/')
+      const {id} = result
+      return User.create({
+        username, 
+        password: encrypt, 
+        role, 
+        ProfileId: +id
+      })
+    })
+    .then(result1 => {
+      res.redirect('/user/login')
+    })
+    .catch(err => { 
+      res.send(err)
+    })
+  }
+  static profile(req, res){
+    Profile.findOne({where: {id}})
+    .then(result => {
+      res.render('', {result})
     })
     .catch(err => {
       // ---------------
     })
   }
-  static profile(req, res){
-    Profile.findOne({where: {id}})
+  static editProfileForm(req, res){
+    const {id} = req.params
+    Profile.findByPk(+id)
+    .then(result => {
+      res.render('', {result})
+    })
+    .catch(err => {
+      // ---------------
+    })
+  }
+  static profileEdited(req, res){
+    const {id} = req.params
+    Profile.findByPk(+id)
+    .then(result => {
+      res.render('', {result})
+    })
+    .catch(err => {
+      // ---------------
+    })
+  }
+  static allVisitor(req, res){
+    Post.findAll()
+    .then(result => {
+      res.render('', {result})
+    })
+    .catch(err => {
+      // ---------------
+    })
+  }
+  static storyForm(req, res){
     res.render('')
+  }
+  static postStory(req, res){
+    const {title, content, imgUrl, tagId} = req.body
+    const {id} = req.params
+    Post.create({title, content, imgUrl, TagId: tagId, UserId: id})
+    .then(result => {
+      res.redirect('/user/profile')
+    })
+    .catch(err => {
+
+    })
   }
 }
 
