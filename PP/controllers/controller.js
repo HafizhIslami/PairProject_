@@ -47,9 +47,9 @@ class Controller{
     .then(result => {
       const { id } = result
       Profile.create({
-        UserId: id
+        UserId: +id
       })
-      res.redirect('/login')
+      res.render('login')
     })
     .catch(err => { 
       console.log(err);
