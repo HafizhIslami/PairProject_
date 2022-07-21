@@ -8,6 +8,7 @@ class Controller{
   }
 
   static loginForm(req, res){
+    req.session.id = 999;
     const { error } = req.query
     res.render('login', { error })
   }
