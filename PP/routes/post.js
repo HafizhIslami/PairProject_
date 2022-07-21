@@ -3,7 +3,7 @@ const Controller = require('../controllers/controller')
 const router = require('express').Router()
 
 router.get('/', Controller.posts)
-router.get('/story', Controller.storyForm)
-router.post('/story', Controller.postStory)
+router.get('/:id/story', Controller.storyForm)
+router.post('/:id/story', Controller.postStory)
 
 module.exports = router

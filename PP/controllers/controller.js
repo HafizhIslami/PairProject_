@@ -18,14 +18,14 @@ class Controller{
       where: {
         username
       },
-      attributes: ['username', 'password']
+      attributes: ['id', 'username', 'password']
     })
     .then(result => {
       if (result) {
-        const isPassTrue = bcrypt.compareSync(password, result.password);
+        const isPassTrue = bcrypt.compareSync(password, result.password);//--------
         console.log(password, isPassTrue, "<======dari compare")
         if (isPassTrue) {
-          res.redirect('/posts');
+          res.redirect('/posts/' + result.id);
           return;
         }
       }
@@ -42,17 +42,10 @@ class Controller{
 
   static createAccount(req,res){
     const {username, password, role} = req.body
-    Profile.create({})
+    User.newUser(username, password, role, +id)
     .then(result => {
       const { id } = result
-      return User.create({
-        username, 
-        password, 
-        role, 
-        ProfileId: id
-      })
-    })
-    .then(() => {
+      Profile.create({})
       res.redirect('/login')
     })
     .catch(err => { 
@@ -61,10 +54,9 @@ class Controller{
   }
 
   static profile(req, res){
-    const {id} = req.params
-    Profile.findOne({where: {id: +id}}) // akses id dari user.ProfileId
+    const id = req.params.id
+    Profile.findOne({where: {id: +id}}) 
     .then(result => {
-      // res.render('', {result})
       return Post.findAll({where: {UserId: +id}}), result
     })
     .then(result1 => {
@@ -122,13 +114,14 @@ class Controller{
   }
 
   static storyForm(req, res){
-    res.render('index', { page: 'postAdd' })
+    const id = req.params.id
+    res.render('index', { page: 'postAdd', id })
   }
 
   static postStory(req, res){
     const {title, content, imgUrl, tagId} = req.body
-    const {id} = req.params
-    Post.create({title, content, imgUrl, TagId: tagId, UserId: id})
+    const id = req.params.id
+    Post.create({title, content, imgUrl, TagId: tagId, UserId: +id})
     .then(result => {
       res.redirect('/user/profile')
     })
