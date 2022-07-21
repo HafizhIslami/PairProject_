@@ -1,11 +1,12 @@
 const Controller = require('../controllers/controller')
 
-const post = require('express').Router()
+const router2 = require('express').Router()
 
-post.get('/allvisitor', Controller.allVisitor)
-post.get('/story', Controller.storyForm)
-post.post('/story', Controller.postStory)
+router2.get('/allvisitor', Controller.allVisitor)
+router2.get('/story', Controller.storyForm)
+router2.post('/story', Controller.postStory)
+// router2.get('/search', Controller.search)
 
 
 
-module.exports = post
+module.exports = router2

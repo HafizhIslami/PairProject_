@@ -1,13 +1,14 @@
+const router1 = require('express').Router()
 const Controller = require('../controllers/controller')
-const { use } = require('./post')
-const user = require('express').Router()
-
-user.get('/login', Controller.loginForm)
-user.post('/login', Controller.login)
-user.get('/createaccount', Controller.createAccount)
-user.get('/profile', Controller.profile)
-user.get('/profile/edit', Controller.editProfileForm)
-user.post('/profile/edit', Controller.profileEdited)
 
 
-module.exports = user
+router1.get('/login', Controller.loginForm)
+router1.post('/login', Controller.login)
+router1.get('/createaccount', Controller.createAccountForm)
+router1.post('/createaccount', Controller.createAccount)
+router1.get('/profile', Controller.profile)
+router1.get('/profile/edit', Controller.editProfileForm)
+router1.post('/profile/edit', Controller.profileEdited)
+
+
+module.exports = router1
