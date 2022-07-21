@@ -37,25 +37,35 @@ class Controller{
   }
 
   static createAccountForm(req,res){
-    res.render('register')
+    const { error } = req.query
+    res.render('register', { error })
   }
 
   static createAccount(req,res){
     const {username, password, role} = req.body
-    Profile.create({})
+    User.create({
+      username, 
+      password, 
+      role,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
     .then(result => {
       const { id } = result
-      return User.create({
-        username, 
-        password, 
-        role, 
-        ProfileId: id
+      return Profile.create({
+        UserId: id
       })
     })
     .then(() => {
       res.redirect('/login')
     })
     .catch(err => { 
+      console.log(err);
+      // if (err.name = "SequelizeValidationError") {
+      //   err = err.errors.map(el => el.message)
+      //   res.redirect('/createaccount?error=' + err)
+      //   return;
+      // }
       res.send(err)
     })
   }
@@ -122,13 +132,18 @@ class Controller{
   }
 
   static storyForm(req, res){
-    res.render('index', { page: 'postAdd' })
+    Tag.findAll()
+    .then(result => {
+      res.render('index', { result, page: 'postAdd' })
+    })
+    .catch(err => {
+      res.send(err);
+    })
   }
 
   static postStory(req, res){
-    const {title, content, imgUrl, tagId} = req.body
-    const {id} = req.params
-    Post.create({title, content, imgUrl, TagId: tagId, UserId: id})
+    const {title, content, imgUrl, TagId} = req.body
+    Post.create({title, content, imgUrl, TagId, UserId})
     .then(result => {
       res.redirect('/user/profile')
     })

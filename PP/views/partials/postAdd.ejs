@@ -5,6 +5,13 @@
   <input type="text" name="content" id="content">
   <label for="imgUrl">Image URL</label>
   <input type="text" name="imgUrl" id="imgUrl">
+  <label for="TagId">Tag</label>
+  <select name="TagId" id="TagId">
+    <option disabled hidden selected>--- Select Tag ---</option>
+    <% result.forEach(el => { %>
+      <option value="<%= el.id %>"><%= el.name %></option>
+    <% }); %> 
+  </select>
   <div>
     <button class="btn add" type="submit">Add Post</button>
   </div>
