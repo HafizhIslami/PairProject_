@@ -12,17 +12,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.Profile)
+      User.hasOne(models.Profile, {
+        foreignKey: 'UserId'
+      })
       User.hasMany(models.Post, {
         foreignKey: 'UserId'
       })
     }
-    static newUser(username, password, role, id){
+    static newUser(username, password, role){
       return User.create({
         username, 
         password, 
-        role, 
-        ProfileId: id
+        role
       })
     }
   }
@@ -35,7 +36,14 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {msg: 'Please insert your username'},
       }
     },
-    password: DataTypes.STRING,
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {msg: 'Please insert your password'},
+        notNull: {msg: 'Please insert your password'},
+      }
+    },
     role: DataTypes.STRING,
     ProfileId: DataTypes.INTEGER
   }, {
