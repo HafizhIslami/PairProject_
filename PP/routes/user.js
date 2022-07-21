@@ -1,5 +1,4 @@
 const Controller = require('../controllers/controller')
-const { use } = require('./post')
 const user = require('express').Router()
 
 user.get('/login', Controller.loginForm)

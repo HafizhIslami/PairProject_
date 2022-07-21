@@ -6,4 +6,5 @@ const Controller = require('../controllers/controller')
 router.get('/', Controller.home)
 router.get('/user', user)
 router.get('/post', post)
-router.get('/search', Controller.search)
+
+module.exports = router

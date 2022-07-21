@@ -6,7 +6,7 @@ class Controller{
     Controller.loginForm()
   }
   static loginForm(req, res){
-    res.render('')
+    res.render('login')
   }
   static login(req, res){
     const {username, password} = req.body
