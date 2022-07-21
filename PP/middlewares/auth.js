@@ -1,6 +1,9 @@
 function isLogin(req, res, next) {
-  console.log(req.session.id, "<===== masuk dari session");
-  next()
+  if (req.session.UserId) {
+    next()
+    return
+  }
+  res.redirect('/login?error=Login First');
 }
 
 module.exports = isLogin

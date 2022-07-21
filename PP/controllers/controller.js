@@ -1,5 +1,5 @@
 const { Post, Profile, Tag, User } = require('../models')
-const { Op } = require('sequelize');
+const { Op, Model, where } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 class Controller{
@@ -8,7 +8,6 @@ class Controller{
   }
 
   static loginForm(req, res){
-    req.session.id = 999;
     const { error } = req.query
     res.render('login', { error })
   }
@@ -23,16 +22,17 @@ class Controller{
     })
     .then(result => {
       if (result) {
-        const isPassTrue = bcrypt.compareSync(password, result.password);//--------
-        console.log(password, isPassTrue, "<======dari compare")
+        const isPassTrue = bcrypt.compareSync(password, result.password);
         if (isPassTrue) {
-          res.redirect('/posts/' + result.id);
+          req.session.UserId = result.id
+          res.redirect('/posts');
           return;
         }
       }
       res.redirect('/login?error=Wrong username or password');
     })
     .catch(err => {
+      console.log(err)
       res.send(err);
     })
   }
@@ -51,11 +51,10 @@ class Controller{
         UserId: +id
       })
     })
-    .then(result1 => {
+    .then(() => {
       res.redirect('/login')
     })
     .catch(err => { 
-      // console.log(err);
       if (err.name === "SequelizeValidationError") {
         err = err.errors.map(el => el.message)
         res.redirect('/createaccount?error=' + err)
@@ -66,23 +65,37 @@ class Controller{
   }
 
   static profile(req, res){
-    const id = req.params.id
-    Profile.findOne({where: {id: +id}}) 
-    .then(result => {
-      return Post.findAll({where: {UserId: +id}}), result
+    const UserId = req.session.UserId
+    let userData;
+    User.findByPk(UserId,{
+      include: [Profile],
+      attributes: ['username']
     })
-    .then(result1 => {
-      const {} = result1  // cek pilihan data untuk dilempar ke render
-      res.render('index', { result, page: 'profile'})
+    .then(resultUser => {
+      userData = resultUser.dataValues
+      return Post.findAll({
+        include: [Tag],
+        where: {
+          UserId
+        }
+      })
+    })
+    .then(postData => {
+      res.render('index', { userData, postData, page: 'profile' });
     })
     .catch(err => {
+      console.log(err);
       res.send(err)
     })
   }
 
   static editProfileForm(req, res){
-    const {id} = req.params
-    Profile.findByPk(+id)
+    const UserId = req.session.UserId
+    Profile.findOne({
+      where: {
+        UserId
+      }
+    })
     .then(result => {
       res.render('index', { result, page: 'profileEdit' })
     })
@@ -90,12 +103,17 @@ class Controller{
       res.send(err)
     })
   }
-
+  
   static profileEdited(req, res){
-    const {id} = req.params
-    Profile.findByPk(+id)
+    const data = req.body
+    const UserId = req.session.UserId
+    Profile.update(data, {
+      where: {
+        UserId
+      }
+    })
     .then(result => {
-      res.redirect('user/profile')
+      res.redirect('/user/profile')
     })
     .catch(err => {
       res.send(err)
@@ -137,9 +155,9 @@ class Controller{
 
   static postStory(req, res){
     const {title, content, imgUrl, TagId} = req.body
-    const id = req.params.id
-    Post.create({title, content, imgUrl, TagId, UserId: +id})
-    .then(result => {
+    const UserId = req.session.UserId
+    Post.create({ title, content, imgUrl, TagId, UserId })
+    .then(() => {
       res.redirect('/user/profile')
     })
     .catch(err => {

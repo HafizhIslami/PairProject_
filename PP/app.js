@@ -4,13 +4,6 @@ const port = 3000
 const router = require('./routes');
 const session = require('express-session');
 
-app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended : true}))
-
-app.use('/', router)
-
-app.use(express.static(__dirname + '/public'));
-
 app.use(session({
   secret: 'fun always',
   resave: false,
@@ -20,5 +13,11 @@ app.use(session({
     sameSite: true 
   }
 }))
+
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs')
+app.use(express.urlencoded({extended : true}))
+
+app.use('/', router)
 
 app.listen(port)

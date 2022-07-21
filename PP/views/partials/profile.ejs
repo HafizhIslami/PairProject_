@@ -1,64 +1,32 @@
 <div class="my-profile">
   <div>
     <div class="photo-profile">
-      <img src="" alt="">
+      <img src="<%= userData.Profile.imgUrl %>" alt="">
     </div>
-    <a>Long Name</a>
+    <a><%= userData.Profile.longName() %></a>
   </div>
   <div class="show-username">
-    <a class="username">Username</a>
-    <a class="btn edit" href="">Edit Profile</a>
+    <a class="username"><%= userData.username %></a>
+    <a class="btn edit" href="/user/profile/edit">Edit Profile</a>
   </div>
   <div class="total-post">
-    <a style="font-weight: bolder;">5</a>
+    <a style="font-weight: bolder;"><%= postData.length %></a>
     <a>Posts</a>
+    <a class="btn add" href="/posts/story">Add Post</a>
   </div>
 </div>
 
-<div class="container">
-  <div class="img">
-    <img src="" alt="">
+<% postData.forEach(el => { %>
+  <div class="container">
+    <div class="img">
+      <img src="<%= el.imgUrl %>" alt="">
+    </div>
+    <div class="caption">
+      <h5><%= el.title %></h5>
+      <p><%= el.content %></p>
+    </div>
+    <div class="action">
+      <a class="btn delete" href="">Delete</a>
+    </div>
   </div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-  <div class="action">
-    <a class="btn delete" href="">Delete</a>
-  </div>
-</div>
-<div class="container">
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-  <div class="action">
-    <a class="btn delete" href="">Delete</a>
-  </div>
-</div>
-<div class="container">
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-  <div class="action">
-    <a class="btn delete" href="">Delete</a>
-  </div>
-</div>
-<div class="container">
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-  <div class="action">
-    <a class="btn delete" href="">Delete</a>
-  </div>
-</div>
-<div class="container">
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-  <div class="action">
-    <a class="btn delete" href="">Delete</a>
-  </div>
-</div>
+<% }); %> 

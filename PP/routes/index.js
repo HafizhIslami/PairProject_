@@ -10,7 +10,7 @@ router.post('/login', Controller.login)
 router.get('/createaccount', Controller.createAccountForm)
 router.post('/createaccount', Controller.createAccount)
 
-router.use(isLogin)
+router.use(isLogin) 
 
 router.use('/user', user)
 router.use('/posts', post)
