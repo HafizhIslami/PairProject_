@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       Post.belongsTo(models.Tag)
       Post.belongsTo(models.User)
     }
+    dateToString(){
+      return new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'medium' }).format(this.createdAt)
+    }
   }
   Post.init({
     title: DataTypes.STRING,

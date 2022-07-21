@@ -46,18 +46,20 @@ class Controller{
     User.newUser(username, password, role)
     .then(result => {
       const { id } = result
-      Profile.create({
+      return Profile.create({
         UserId: +id
       })
-      res.render('login')
+    })
+    .then(result1 => {
+      res.redirect('/login')
     })
     .catch(err => { 
-      console.log(err);
-      // if (err.name = "SequelizeValidationError") {
-      //   err = err.errors.map(el => el.message)
-      //   res.redirect('/createaccount?error=' + err)
-      //   return;
-      // }
+      // console.log(err);
+      if (err.name === "SequelizeValidationError") {
+        err = err.errors.map(el => el.message)
+        res.redirect('/createaccount?error=' + err)
+        return;
+      }
       res.send(err)
     })
   }
@@ -142,6 +144,10 @@ class Controller{
     .catch(err => {
       res.send(err)
     })
+  }
+
+  static tryEmoji(req, res){
+    res.send()
   }
 }
 

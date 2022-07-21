@@ -16,7 +16,9 @@
       <div class="right">
         <div class="form">
           <h1>Visit</h1>
-          <h4 style="color: red;"><%= error %></h4>
+          <% if (error) { %> 
+          <h4 style="color: red;"><%= err %></h4>
+          <% } %>
           <form action="/login" method="post">
             <label for="username">Username</label>
             <input type="text" name="username" id="username">
