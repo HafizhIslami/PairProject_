@@ -1,47 +1,14 @@
-<div class="container">
-  <div class="name">
-    <a>Name</a>
+<% result.forEach(el => { %>
+  <div class="container">
+    <div class="name">
+      <a><%= el.User.username %></a>
+    </div>
+    <div class="img">
+      <img src="<%= el.imgUrl %>" alt="">
+    </div>
+    <div class="caption">
+      <h4><%= el.title %></h4>
+      <p><%= el.content %></p>
+    </div>
   </div>
-  <div class="img">
-    <img src="" alt="">
-  </div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-</div>
-<div class="container">
-  <div class="name">
-    <a>Name</a>
-  </div>
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-</div>
-<div class="container">
-  <div class="name">
-    <a>Name</a>
-  </div>
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-</div>
-<div class="container">
-  <div class="name">
-    <a>Name</a>
-  </div>
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-</div>
-<div class="container">
-  <div class="name">
-    <a>Name</a>
-  </div>
-  <div class="img"></div>
-  <div class="caption">
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, molestias?</p>
-  </div>
-</div>
+<% }); %> 
