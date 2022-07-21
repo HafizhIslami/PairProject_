@@ -9,6 +9,11 @@ router.post('/login', Controller.login)
 router.get('/createaccount', Controller.createAccountForm)
 router.post('/createaccount', Controller.createAccount)
 
+router.use((req, res, next) => {
+  console.log("masuk middleware");
+  next()
+})
+
 router.use('/user', user)
 router.use('/posts', post)
 
