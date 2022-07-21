@@ -19,6 +19,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'UserId'
       })
     }
+    static newUser(username, password, role){
+      return User.create({
+        username, 
+        password, 
+        role
+      })
+    }
   }
   User.init({
     username: {
