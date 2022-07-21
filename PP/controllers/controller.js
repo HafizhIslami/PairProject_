@@ -41,7 +41,7 @@ class Controller{
     .then(result1 => {
       res.redirect('/user/login')
     })
-    .catch(err => {
+    .catch(err => { 
       res.send(err)
     })
   }
