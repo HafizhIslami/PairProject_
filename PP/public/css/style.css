@@ -50,7 +50,7 @@ input.search {
 
 .btn:hover {
   cursor: pointer;
-  opacity: 0.9;
+  box-shadow: 0 0 3px gray;
 }
 
 button.search {
@@ -112,6 +112,19 @@ main {
   margin: 10px 20px;
 }
 
+.show-username a {
+  margin-right: 10px;
+}
+
+.show-username .username {
+  font-size: 25px;
+}
+
+.edit {
+  padding: 5px;
+  background-color: rgb(139, 139, 139);
+}
+
 .total-post {
   flex: 1;
   display: flex;
@@ -130,12 +143,30 @@ main {
   margin-right: 10px;
 }
 
-.edit {
-  padding: 8px 12px;
-  background-color: rgb(139, 139, 139);
-}
-
 .delete {
   padding: 8px 12px;
   background-color: rgb(199, 21, 21);
+}
+
+.form-add, .form-edit {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-add input, .form-edit input {
+  width: 300px;
+  padding: 6px;
+  border: none;
+  outline: 1px solid rgb(105, 105, 105);
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.add {
+  padding: 10px;
+  background-color: darkcyan;
+}
+
+.form-add .add, .form-edit .edit {
+  padding: 8px 10px;
 }
