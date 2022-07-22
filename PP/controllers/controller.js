@@ -1,7 +1,8 @@
 const { Post, Profile, Tag, User } = require('../models')
-const { Op, Model, where } = require('sequelize');
+const { Op,  } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { username } = require('../helper');
+const convertEmoji = require('../helper/index')
 
 class Controller{
   static home(req, res){
@@ -127,6 +128,9 @@ class Controller{
     Post.findAll({
       include: [
         {
+          model: Tag
+        },
+        {
           model: User,
           attributes: ['email'],
           include: [Profile]
@@ -142,6 +146,7 @@ class Controller{
       }
     })
     .then(result => {
+      result.emoticon = convertEmoji('smile')
       res.render('index', { result, page: 'posts' })
     })
     .catch(err => {
