@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     longName() {
       let first = this.firstName
       let last = this.lastName
-      first !== null ?  first : ''
-      last !== null ?  last : ''
+      first = first !== null ?  first : ''
+      last = last !== null ?  last : ''
       return first + " " + last
     }
   }

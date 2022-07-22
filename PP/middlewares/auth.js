@@ -6,4 +6,13 @@ function isLogin(req, res, next) {
   res.redirect('/login?error=Login First');
 }
 
-module.exports = isLogin
+function isUser(req, res, next) {
+  console.log(req.session)
+  if (req.session.role == "User") {
+    next()
+    return
+  }
+  res.redirect('/login?error=Login First');
+}
+
+module.exports = { isLogin, isUser }

@@ -88,8 +88,29 @@ main {
   width: 500px;
 }
 
-.name, .caption {
+.post-profile, .caption {
   padding: 10px;
+}
+
+.post-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border: 1px solid gainsboro;
+  border-radius: 50px;
+  background-color: rgb(255, 217, 147);
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.profile-photo img {
+  width: 40px;
+  height: 40px;
 }
 
 .my-profile {
@@ -112,6 +133,10 @@ main {
   overflow: hidden;
 }
 
+.photo-longname {
+  text-align: center;
+}
+
 .photo-profile img {
   width: 80px;
 }
@@ -132,6 +157,11 @@ main {
 .edit {
   padding: 5px;
   background-color: rgb(139, 139, 139);
+}
+
+.logout {
+  padding: 5px;
+  background-color: brown;
 }
 
 .total-post {

@@ -1,6 +1,7 @@
 const { Post, Profile, Tag, User } = require('../models')
 const { Op, Model, where } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const { username } = require('../helper');
 
 class Controller{
   static home(req, res){
@@ -17,14 +18,14 @@ class Controller{
     User.findOne({
       where: {
         email
-      },
-      attributes: ['id', 'email', 'password']
+      }
     })
     .then(result => {
       if (result) {
         const isPassTrue = bcrypt.compareSync(password, result.password);
         if (isPassTrue) {
           req.session.UserId = result.id
+          req.session.role = result.role
           res.redirect('/posts');
           return;
         }
@@ -43,7 +44,8 @@ class Controller{
   }
 
   static createAccount(req,res){
-    const {email, password, role} = req.body
+    const { email, password } = req.body
+    const role = 'User'
     User.newUser(email, password, role)
     .then(result => {
       const { id } = result
@@ -126,8 +128,12 @@ class Controller{
       include: [
         {
           model: User,
-          attributes: ['email']
-        }
+          attributes: ['email'],
+          include: [Profile]
+        },
+        // {
+        //   model: [Tag] <<<====== gatau error kalau include Tag
+        // }
       ],
       where: {
         title: {
@@ -139,6 +145,7 @@ class Controller{
       res.render('index', { result, page: 'posts' })
     })
     .catch(err => {
+      // console.log(err);
       res.send(err);
     })
   }
@@ -162,6 +169,30 @@ class Controller{
     })
     .catch(err => {
       res.send(err)
+    })
+  }
+
+  static storyDelete(req, res) {
+    const { UserId } = req.session
+    const id = req.params.postId
+    Post.destroy({
+      where: {
+        id,
+        UserId
+      }
+    })
+    .then(() => {
+      res.redirect('/user/profile')
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+
+  static logout(req, res) {
+    req.session.destroy(function(err) {
+      if (err) return res.send(err)
+      res.redirect('/');
     })
   }
 
