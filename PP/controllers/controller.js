@@ -150,7 +150,7 @@ class Controller{
       res.render('index', { result, page: 'posts' })
     })
     .catch(err => {
-      // console.log(err);
+      console.log(err);
       res.send(err);
     })
   }

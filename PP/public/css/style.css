@@ -98,6 +98,19 @@ main {
   align-items: center;
 }
 
+.tag {
+  display: flex;
+  flex-direction: row;
+}
+
+.tag a {
+  margin: 0 0 10px 10px;
+  padding: 5px;
+  background-color: deepskyblue;
+  color: darkblue;
+  border-radius: 5px;
+}
+
 .profile-photo {
   width: 40px;
   height: 40px;
