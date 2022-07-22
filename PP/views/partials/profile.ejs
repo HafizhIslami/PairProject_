@@ -1,5 +1,5 @@
 <div class="my-profile">
-  <div>
+  <div class="photo-longname">
     <div class="photo-profile">
       <img src="<%= userData.Profile.imgUrl %>" alt="">
     </div>
@@ -8,6 +8,7 @@
   <div class="show-email">
     <a class="email"><%= userData.email %></a>
     <a class="btn edit" href="/user/profile/edit">Edit Profile</a>
+    <a class="btn logout" href="/user/logout">LogOut</a>
   </div>
   <div class="total-post">
     <a style="font-weight: bolder;"><%= postData.length %></a>
@@ -26,7 +27,7 @@
       <p><%= el.content %></p>
     </div>
     <div class="action">
-      <a class="btn delete" href="">Delete</a>
+      <a class="btn delete" href="/posts/delete/<%= el.id %>">Delete</a>
     </div>
   </div>
 <% }); %> 
