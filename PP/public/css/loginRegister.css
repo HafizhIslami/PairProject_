@@ -17,9 +17,18 @@ body {
 
 .image {
   border-radius: 5px;
-  width: 380px;
+  width: 800px;
   height: 580px;
-  background-color: antiquewhite;
+  background-color: rgb(255, 249, 243);
+  padding: 40px;
+}
+
+.image h1 {
+  font-size: 100px;
+}
+
+.image p {
+  font-size: 20px;
 }
 
 .form {
